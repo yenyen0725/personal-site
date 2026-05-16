@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Site</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/editmode.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="#hero" class="nav__logo" data-field="navLogo">Your Name</a>
+    <div class="nav__links" id="navLinksContainer"></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-shrink:0;">
+      <button class="btn btn--edit" id="editToggleBtn">✏️ 編輯模式</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Edit Mode Bar -->
+<div class="edit-mode-bar">
+  <span>✏️ 編輯模式</span>
+  <div class="edit-mode-bar__actions">
+    <button class="edit-bar-btn" id="undoBtn" title="還原 (Ctrl+Z)">↩️ 還原</button>
+    <button class="edit-bar-btn" id="redoBtn" title="重做 (Ctrl+Y)">↪️ 重做</button>
+    <button class="edit-bar-btn edit-bar-btn--danger" id="discardBtn">✕ 放棄</button>
+  </div>
+  <span class="edit-mode-bar__hint">點擊文字修改・圖片區點擊上傳・底部橫線拖曳調高度</span>
+</div>
+
+
+<!-- Sections container — order managed by SectionControls -->
+<div id="sectionsContainer">
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero__grid">
+      <div class="hero__text-col">
+        <div class="hero__tag" data-field="heroEyebrow">✦ Portfolio</div>
+        <h1 class="hero__name" data-field="heroName">Your Name</h1>
+        <p class="hero__title" data-field="heroTitle">Designer &amp; Creative Professional</p>
+        <p class="hero__bio" data-field="heroBio" data-multiline="true">
+          我熱愛將創意與策略結合，打造有溫度、有設計感的品牌體驗。每個作品都是我對美學與功能之間平衡的探索。
+        </p>
+        <div class="hero__actions">
+          <a href="#portfolio" class="btn btn--primary"><span data-field="heroCTA1">查看作品集</span></a>
+          <a href="#contact"   class="btn btn--outline"><span data-field="heroCTA2">聯絡我</span></a>
+        </div>
+      </div>
+      <div class="hero__photo-col">
+        <div class="hero__photo-frame">
+          <div class="hero__photo" data-field="heroPhotoData" data-type="image">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" style="width:100%;height:100%;">
+              <rect width="400" height="400" fill="#4a3525"/>
+              <circle cx="200" cy="160" r="80" fill="#7a5c42" opacity="0.7"/>
+              <ellipse cx="200" cy="340" rx="120" ry="80" fill="#7a5c42" opacity="0.7"/>
+              <circle cx="200" cy="155" r="65" fill="#9a7558"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-resize-handle" title="拖曳調整區塊高度"></div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     ABOUT
+══════════════════════════════════════ -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about__grid">
+      <div class="about__image-col">
+        <div class="about__side-image" data-field="aboutSideImageData" data-type="image">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" style="width:100%;height:100%;">
+            <rect width="400" height="500" fill="#D4C4A8"/>
+            <rect x="40" y="40" width="320" height="420" rx="12" fill="#C9A96E" opacity="0.3"/>
+            <circle cx="200" cy="180" r="80" fill="#C0714F" opacity="0.25"/>
+            <rect x="80" y="300" width="240" height="20" rx="4" fill="#3D2B1F" opacity="0.12"/>
+            <rect x="100" y="335" width="200" height="14" rx="4" fill="#3D2B1F" opacity="0.08"/>
+          </svg>
+        </div>
+      </div>
+      <div class="about__content-col">
+        <span class="section-eyebrow" data-field="aboutEyebrow">About Me</span>
+        <h2 class="about__heading" data-field="aboutTitle">關於我</h2>
+        <div class="divider"></div>
+        <p class="about__lead" data-field="aboutLead">設計是我與世界對話的語言。</p>
+        <p class="about__body" data-field="aboutBody" data-multiline="true">
+          我是一位熱愛設計的創作者，擁有多年品牌設計、視覺傳達及數位內容製作的經驗。
+        </p>
+        <div class="about__stats">
+          <div class="stat-card">
+            <span class="stat-card__number" data-field="stat1Number">50+</span>
+            <span class="stat-card__label"  data-field="stat1Label">完成專案</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__number" data-field="stat2Number">5+</span>
+            <span class="stat-card__label"  data-field="stat2Label">年資歷</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__number" data-field="stat3Number">30+</span>
+            <span class="stat-card__label"  data-field="stat3Label">滿意客戶</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-resize-handle" title="拖曳調整區塊高度"></div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     PORTFOLIO
+══════════════════════════════════════ -->
+<section class="portfolio" id="portfolio">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow" data-field="portfolioEyebrow">Works</span>
+        <h2 class="section-heading" data-field="portfolioTitle">作品集</h2>
+      </div>
+    </div>
+    <div class="portfolio__filters" id="portfolioFilters">
+      <button class="filter-btn active" data-filter="全部">全部</button>
+    </div>
+    <p class="filter-rename-hint">編輯模式下可雙擊分類名稱重新命名</p>
+    <div class="portfolio__grid" id="portfolioGrid">
+      <button class="add-project-card" id="addProjectBtn">
+        <span class="add-project-card__icon">＋</span>
+        <span>新增作品</span>
+      </button>
+    </div>
+  </div>
+  <div class="section-resize-handle" title="拖曳調整區塊高度"></div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SKILLS
+══════════════════════════════════════ -->
+<section class="skills" id="skills">
+  <div class="container">
+    <div style="text-align:center;max-width:600px;margin:0 auto var(--sp-10);">
+      <span class="section-eyebrow" data-field="skillsEyebrow">Services</span>
+      <h2 class="section-heading" data-field="skillsTitle" style="margin-top:0;">我的服務</h2>
+      <div class="divider" style="margin:var(--sp-4) auto;"></div>
+      <p style="color:var(--text-secondary);line-height:1.75;" data-field="skillsSub">
+        結合專業技術與創意思維，提供全方位的設計服務。
+      </p>
+    </div>
+    <div class="skills__grid" id="skillsGrid"></div>
+  </div>
+  <div class="section-resize-handle" title="拖曳調整區塊高度"></div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     CONTACT
+══════════════════════════════════════ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact__grid">
+      <div class="contact__info">
+        <span class="section-eyebrow" style="color:var(--sand);" data-field="contactEyebrow">Contact</span>
+        <h2 class="contact__heading" data-field="contactTitle">聯絡我</h2>
+        <div class="divider" style="background:var(--sand);opacity:0.5;"></div>
+        <p class="contact__sub" data-field="contactSub" data-multiline="true">
+          有任何合作提案或想法，歡迎隨時與我聯繫。
+        </p>
+        <a class="contact__email-link" id="contactEmailLink" href="mailto:hello@yourname.com">
+          ✉️ <span id="contactEmailField" data-field="contactEmail">hello@yourname.com</span>
+        </a>
+        <div class="contact__links" id="contactLinks"></div>
+      </div>
+    </div>
+  </div>
+  <div class="section-resize-handle" title="拖曳調整區塊高度"></div>
+</section>
+
+
+</div><!-- /sectionsContainer -->
+
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <p class="footer__text">
+      © <span id="footerYear"></span> <span data-field="navLogo">Your Name</span>. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════
+     PROJECT DETAIL OVERLAY
+══════════════════════════════════════ -->
+<div class="project-detail-overlay" id="projectDetailOverlay">
+  <div class="project-detail">
+    <div class="project-detail__topbar">
+      <button class="project-detail__back" id="projectDetailBack">← 返回</button>
+      <div class="project-detail__add-bar" id="detailAddBar">
+        <span class="detail-add-label">新增內容</span>
+        <button class="detail-add-btn" data-add="text">＋ 文字</button>
+        <button class="detail-add-btn" data-add="image">＋ 照片</button>
+        <button class="detail-add-btn" data-add="file">＋ 檔案</button>
+      </div>
+    </div>
+    <div class="project-detail__cover" id="detailCover"></div>
+    <div class="project-detail__intro">
+      <span class="project-card__tag" id="detailTag"></span>
+      <h1 class="project-detail__title" id="detailTitle"></h1>
+      <p class="project-detail__desc" id="detailDesc"></p>
+      <a class="project-card__link" id="detailUrl" target="_blank" rel="noopener" style="display:none;">查看外部連結 ↗</a>
+    </div>
+    <div class="project-detail__content" id="detailContent"></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     MODAL — Add / Edit Project
+══════════════════════════════════════ -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title" id="modalTitle">新增作品</h2>
+      <button class="modal__close" id="modalClose">✕</button>
+    </div>
+    <div class="modal__form">
+      <div class="form-group">
+        <label class="form-label">作品名稱 <span style="color:var(--terracotta);">*</span></label>
+        <input class="form-input" type="text" id="modalProjTitle" placeholder="輸入作品名稱">
+      </div>
+      <div class="form-group">
+        <label class="form-label">分類標籤</label>
+        <input class="form-input" type="text" id="modalProjTag" placeholder="例：品牌設計、網頁設計">
+      </div>
+      <div class="form-group">
+        <label class="form-label">作品描述</label>
+        <textarea class="form-textarea" id="modalProjDesc" placeholder="簡短描述..." style="min-height:80px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">作品連結（選填）</label>
+        <input class="form-input" type="url" id="modalProjUrl" placeholder="https://...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">作品圖片（選填）</label>
+        <div class="image-upload-area">
+          <img id="modalImagePreview" class="image-upload-area__preview" src="" alt="" style="display:none;">
+          <p class="image-upload-area__hint">點擊上傳圖片</p>
+          <input type="file" id="modalImageInput" accept="image/*">
+        </div>
+      </div>
+      <input type="hidden" id="_pendingImageData">
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn--ghost" id="modalCancel">取消</button>
+      <button class="btn btn--primary" id="modalSave">儲存作品</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Scripts -->
+<script src="js/storage.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/color-picker.js"></script>
+<script src="js/nav-editor.js"></script>
+<script src="js/section-controls.js"></script>
+<script src="js/editmode.js"></script>
+<script src="js/portfolio.js"></script>
+<script src="js/project-detail.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+:root {
+  /* Backgrounds */
+  --bg-base:    #F5F0E8;
+  --bg-alt:     #EDE5D8;
+  --bg-dark:    #3D2B1F;
+  --bg-darker:  #2A1D14;
+  --bg-card:    #FAF6EF;
+
+  /* Accents */
+  --terracotta:    #C0714F;
+  --terracotta-lt: #E8A882;
+  --terracotta-dk: #9A5438;
+  --sage:          #7A9E7E;
+  --sage-lt:       #B2CCB4;
+  --sand:          #C9A96E;
+  --sand-lt:       #E2D0AE;
+
+  /* Text */
+  --text-primary:   #2C1A0E;
+  --text-secondary: #6B4F37;
+  --text-muted:     #9C7D5E;
+  --text-on-dark:   #F0E8DA;
+  --text-on-dark-2: #C4A882;
+
+  /* Typography — 全站使用襯線體 */
+  --font-serif: 'Noto Serif TC', Georgia, 'Times New Roman', serif;
+  --font-sans:  'Noto Serif TC', Georgia, serif;
+
+  /* Spacing scale */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  /* Border radius */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(44,26,14,0.08), 0 1px 2px rgba(44,26,14,0.04);
+  --shadow-md: 0 4px 12px rgba(44,26,14,0.10), 0 2px 4px rgba(44,26,14,0.06);
+  --shadow-lg: 0 12px 32px rgba(44,26,14,0.12), 0 4px 8px rgba(44,26,14,0.06);
+
+  /* Transitions */
+  --t-fast: 150ms ease;
+  --t-base: 250ms ease;
+  --t-slow: 400ms ease;
+
+  /* Layout */
+  --container: 1120px;
+  --nav-h: 72px;
+}

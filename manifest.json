@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "My Personal Site",
+  "version": "1.0.0",
+  "description": "個人網站 — 大地色系設計，內建編輯模式",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": ["storage"],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self'; img-src 'self' data: blob:;"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "action": {
+    "default_title": "Personal Site"
+  }
+}

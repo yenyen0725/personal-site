@@ -1,0 +1,279 @@
+/* ══════════════════════════════════════
+   EDIT MODE — global indicator
+══════════════════════════════════════ */
+body.edit-mode {
+  outline: 3px solid var(--terracotta);
+  outline-offset: -3px;
+}
+
+.edit-mode-bar {
+  display: none;
+  position: fixed;
+  top: var(--nav-h);
+  left: 0; right: 0;
+  background: var(--terracotta);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px var(--sp-5);
+  z-index: 99;
+  gap: var(--sp-4);
+  align-items: center;
+  justify-content: space-between;
+}
+body.edit-mode .edit-mode-bar { display: flex; }
+body.edit-mode section { scroll-margin-top: calc(var(--nav-h) + 40px); }
+
+.edit-mode-bar__actions { display: flex; gap: var(--sp-2); }
+
+.edit-bar-btn {
+  padding: 4px 14px;
+  border-radius: var(--r-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  transition: background var(--t-fast);
+}
+.edit-bar-btn:hover { background: rgba(255,255,255,0.28); }
+.edit-bar-btn--danger { border-color: rgba(255,255,255,0.3); background: rgba(0,0,0,0.2); }
+.edit-bar-btn--danger:hover { background: rgba(0,0,0,0.35); }
+
+.edit-mode-bar__hint {
+  font-size: 0.72rem;
+  opacity: 0.8;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Portfolio rename hint */
+.filter-rename-hint {
+  display: none;
+  font-size: 0.75rem;
+  color: var(--terracotta);
+  margin-bottom: var(--sp-4);
+  margin-top: calc(-1 * var(--sp-6));
+}
+body.edit-mode .filter-rename-hint { display: block; }
+
+/* ══════════════════════════════════════
+   Editable fields
+══════════════════════════════════════ */
+body.edit-mode [data-field]:not([data-type="image"]) {
+  outline: 1.5px dashed rgba(192,113,79,0.45);
+  border-radius: var(--r-sm);
+  min-width: 32px;
+  min-height: 1em;
+  cursor: text;
+  transition: outline var(--t-fast), background var(--t-fast);
+}
+body.edit-mode [data-field]:not([data-type="image"]):hover {
+  outline-color: var(--terracotta);
+  background: rgba(192,113,79,0.07);
+}
+body.edit-mode [data-field]:not([data-type="image"]):focus {
+  outline: 2px solid var(--terracotta);
+  background: rgba(192,113,79,0.09);
+  box-shadow: 0 0 0 4px rgba(192,113,79,0.15);
+}
+
+/* Dark sections need lighter outlines */
+body.edit-mode .hero [data-field]:not([data-type="image"]),
+body.edit-mode .contact [data-field]:not([data-type="image"]) {
+  outline-color: rgba(232,168,130,0.45);
+}
+body.edit-mode .hero [data-field]:not([data-type="image"]):hover,
+body.edit-mode .contact [data-field]:not([data-type="image"]):hover {
+  outline-color: var(--terracotta-lt);
+  background: rgba(232,168,130,0.09);
+}
+body.edit-mode .hero [data-field]:not([data-type="image"]):focus,
+body.edit-mode .contact [data-field]:not([data-type="image"]):focus {
+  outline-color: var(--terracotta-lt);
+  box-shadow: 0 0 0 4px rgba(232,168,130,0.2);
+}
+
+/* ══════════════════════════════════════
+   Image upload overlay (hero + about)
+══════════════════════════════════════ */
+.img-upload-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(44,26,14,0.52);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  cursor: pointer;
+  z-index: 3;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+.img-upload-overlay input[type=file] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  border-radius: inherit;
+}
+.upload-icon { font-size: 2rem; pointer-events: none; }
+.img-upload-overlay span:not(.upload-icon) {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  pointer-events: none;
+}
+
+/* Show overlay on hover when in edit mode */
+body.edit-mode [data-type="image"] {
+  cursor: pointer;
+}
+body.edit-mode [data-type="image"]:hover .img-upload-overlay {
+  opacity: 1;
+}
+/* Always show a subtle indicator in edit mode */
+body.edit-mode [data-type="image"] .img-upload-overlay {
+  opacity: 0.25;
+}
+body.edit-mode [data-type="image"]:hover .img-upload-overlay {
+  opacity: 1;
+}
+
+/* ══════════════════════════════════════
+   Portfolio & bookmark card controls
+══════════════════════════════════════ */
+body.edit-mode .card-edit-controls { display: flex; }
+
+body.edit-mode .add-project-card,
+body.edit-mode .add-cb-card { display: flex; }
+
+/* Show custom blocks section always in edit mode */
+body.edit-mode .custom-blocks-section { display: block; }
+
+/* ══════════════════════════════════════
+   Contact link URL inputs
+══════════════════════════════════════ */
+.contact-link-url-input {
+  width: 100%;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border: 1px solid rgba(201,169,110,0.3);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.08);
+  color: var(--text-on-dark);
+  outline: none;
+  margin-top: 4px;
+}
+.contact-link-url-input:focus { border-color: var(--terracotta-lt); background: rgba(255,255,255,0.12); }
+
+/* ══════════════════════════════════════
+   Section resize handle
+══════════════════════════════════════ */
+.section-resize-handle {
+  display: none;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 24px;
+  cursor: ns-resize;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  z-index: 10;
+}
+.section-resize-handle::before {
+  content: '';
+  width: 48px;
+  height: 4px;
+  border-radius: var(--r-full);
+  background: var(--sand);
+  opacity: 0.6;
+  transition: opacity var(--t-fast), width var(--t-fast);
+}
+.section-resize-handle:hover::before {
+  opacity: 1;
+  width: 72px;
+  background: var(--terracotta);
+}
+body.edit-mode .section-resize-handle { display: flex; }
+
+/* ══════════════════════════════════════
+   Edit toggle button active state
+══════════════════════════════════════ */
+body.edit-mode #editToggleBtn {
+  background: var(--terracotta);
+  color: #fff;
+  border-color: var(--terracotta);
+}
+
+/* ══════════════════════════════════════
+   Nav editor controls (edit mode only)
+══════════════════════════════════════ */
+body.edit-mode .nlc-controls { display: flex; }
+body.edit-mode .nav__add-link-btn { display: flex; }
+
+/* ══════════════════════════════════════
+   Section controls overlay
+══════════════════════════════════════ */
+.section-controls {
+  display: none;
+  position: absolute;
+  bottom: var(--sp-3);
+  right: var(--sp-3);
+  gap: var(--sp-2);
+  z-index: 20;
+  align-items: center;
+}
+
+body.edit-mode .section-controls { display: flex; }
+
+.sc-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--r-full);
+  background: rgba(245,240,232,0.92);
+  border: 1.5px solid rgba(192,113,79,0.35);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
+  backdrop-filter: blur(4px);
+}
+.sc-btn:hover { background: var(--terracotta); color: #fff; border-color: var(--terracotta); transform: scale(1.08); }
+
+.sc-color-btn { font-size: 1rem; }
+
+/* ══════════════════════════════════════
+   Section dark theme overrides
+   Applied when user sets a dark bg color
+══════════════════════════════════════ */
+.section-dark-theme,
+.section-dark-theme .section-eyebrow,
+.section-dark-theme .section-heading,
+.section-dark-theme h1,
+.section-dark-theme h2,
+.section-dark-theme h3,
+.section-dark-theme p,
+.section-dark-theme li,
+.section-dark-theme span { color: var(--text-on-dark) !important; }
+
+.section-dark-theme .about__lead { color: var(--terracotta-lt) !important; }
+
+.section-dark-theme .stat-card {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(201,169,110,0.25) !important;
+}
+.section-dark-theme .skill-card,
+.section-dark-theme .project-card {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(201,169,110,0.2) !important;
+}
+.section-dark-theme .skill-item { color: var(--text-on-dark-2) !important; }
+.section-dark-theme .divider { background: rgba(201,169,110,0.4) !important; }
