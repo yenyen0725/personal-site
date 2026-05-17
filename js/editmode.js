@@ -274,6 +274,7 @@ const EditMode = (() => {
 
   return {
     init, toggle, enter, exit, isActive, showToast, pushHistory, undo, redo,
+    getData: () => _data,
     makeEditable:      _makeFieldsEditable,
     setupPhotoUploads: _setupPhotoUploads,
     setupResizeHandles: _setupResizeHandles,

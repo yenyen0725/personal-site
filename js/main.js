@@ -1,5 +1,27 @@
+function _encodeToHash(data) {
+  const json = JSON.stringify(data);
+  return btoa(unescape(encodeURIComponent(json)));
+}
+
+function _decodeFromHash() {
+  const hash = window.location.hash;
+  if (!hash.startsWith('#data=')) return null;
+  try {
+    const json = decodeURIComponent(escape(atob(hash.slice(6))));
+    return JSON.parse(json);
+  } catch (e) {
+    return null;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await Storage.load();
+  let data = await Storage.load();
+  const urlData = _decodeFromHash();
+  if (urlData) {
+    data = urlData;
+    await Storage.save(data);
+    history.replaceState(null, '', window.location.pathname);
+  }
 
   Renderer.render(data);
   NavEditor.init(data);
@@ -11,6 +33,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   Portfolio.setupListeners();
   ProjectDetail.init(data);
   ProjectDetail.setupListeners();
+
+  if (urlData) EditMode.showToast('✅ 已載入你的專屬內容');
 
   /* Edit mode toggle */
   const editBtn = document.getElementById('editToggleBtn');
@@ -25,6 +49,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       EditMode.exit(true);
       editBtn.textContent = '✏️ 編輯模式';
     }
+  });
+
+  /* Share link */
+  document.getElementById('shareLinkBtn').addEventListener('click', () => {
+    const encoded = _encodeToHash(EditMode.getData());
+    const url = `${window.location.origin}${window.location.pathname}#data=${encoded}`;
+    navigator.clipboard.writeText(url)
+      .then(() => EditMode.showToast('🔗 已複製！在新裝置貼上連結即可載入'))
+      .catch(() => prompt('複製此連結：', url));
   });
 
   /* Undo / Redo buttons */
