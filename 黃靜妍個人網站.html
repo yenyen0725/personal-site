@@ -285,6 +285,8 @@ body.edit-mode section { scroll-margin-top: calc(var(--nav-h) + 40px); }
 .edit-bar-btn:hover { background: rgba(255,255,255,0.28); }
 .edit-bar-btn--danger { border-color: rgba(255,255,255,0.3); background: rgba(0,0,0,0.2); }
 .edit-bar-btn--danger:hover { background: rgba(0,0,0,0.35); }
+.edit-bar-btn--download { background: rgba(80,160,80,0.25); border-color: rgba(255,255,255,0.6); }
+.edit-bar-btn--download:hover { background: rgba(80,160,80,0.45); }
 .edit-mode-bar__hint { font-size: 0.72rem; opacity: 0.8; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .filter-rename-hint { display: none; font-size: 0.75rem; color: var(--terracotta); margin-bottom: var(--sp-4); margin-top: calc(-1 * var(--sp-6)); }
 body.edit-mode .filter-rename-hint { display: block; }
@@ -346,6 +348,7 @@ body.edit-mode .section-controls { display: flex; }
     <button class="edit-bar-btn edit-bar-btn--danger" id="discardBtn">✕ 放棄</button>
     <button class="edit-bar-btn" id="exportBtn">📥 匯出設定</button>
     <button class="edit-bar-btn" id="importBtn">📤 匯入設定</button>
+    <button class="edit-bar-btn edit-bar-btn--download" id="downloadBtn">⬇️ 下載 HTML</button>
     <input type="file" id="importFileInput" accept=".json" style="display:none;">
   </div>
   <span class="edit-mode-bar__hint">點擊文字修改・圖片區點擊上傳・底部橫線拖曳調高度</span>
@@ -788,6 +791,47 @@ document.addEventListener('DOMContentLoaded', async () => {
       EditMode.showToast('⚠️ 設定檔格式錯誤');
     }
     e.target.value = '';
+  });
+
+  /* 下載 HTML */
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    // 1. 離開編輯模式（移除 contenteditable、edit-mode class）
+    const wasActive = EditMode.isActive();
+    if (wasActive) EditMode.exit(false); // false = 不清空資料，只關閉 UI
+
+    // 2. 暫時隱藏編輯相關 UI（從 DOM 移除）
+    const toRemove = ['editToggleBtn', 'importFileInput'];
+    const editBar = document.querySelector('.edit-mode-bar');
+    const removeInfo = [];
+    toRemove.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) removeInfo.push({ el, parent: el.parentNode, next: el.nextSibling });
+    });
+    if (editBar) removeInfo.push({ el: editBar, parent: editBar.parentNode, next: editBar.nextSibling });
+    removeInfo.forEach(({ el }) => el.remove());
+
+    // 3. 截取乾淨的 HTML
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+    // 4. 還原 UI
+    removeInfo.reverse().forEach(({ el, parent, next }) => {
+      if (parent) parent.insertBefore(el, next);
+    });
+    if (wasActive) {
+      const editBtn = document.getElementById('editToggleBtn');
+      EditMode.toggle();
+      if (editBtn) editBtn.textContent = '✅ 完成編輯';
+    }
+
+    // 5. 觸發下載
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '黃靜妍個人網站_修改版.html';
+    a.click();
+    URL.revokeObjectURL(url);
+    EditMode.showToast('⬇️ 網站已下載！');
   });
 
   document.getElementById('undoBtn').addEventListener('click', () => EditMode.undo());
