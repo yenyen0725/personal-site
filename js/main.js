@@ -51,13 +51,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  /* Share link */
-  document.getElementById('shareLinkBtn').addEventListener('click', () => {
-    const encoded = _encodeToHash(EditMode.getData());
-    const url = `${window.location.origin}${window.location.pathname}#data=${encoded}`;
-    navigator.clipboard.writeText(url)
-      .then(() => EditMode.showToast('🔗 已複製！在新裝置貼上連結即可載入'))
-      .catch(() => prompt('複製此連結：', url));
+  /* Export settings */
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const json = JSON.stringify(EditMode.getData(), null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'personal-site-settings.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    EditMode.showToast('📥 設定已匯出！');
+  });
+
+  /* Import settings */
+  document.getElementById('importBtn').addEventListener('click', () => {
+    document.getElementById('importFileInput').click();
+  });
+  document.getElementById('importFileInput').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const imported = JSON.parse(text);
+      await Storage.save(imported);
+      location.reload();
+    } catch {
+      EditMode.showToast('⚠️ 設定檔格式錯誤');
+    }
+    e.target.value = '';
   });
 
   /* Undo / Redo buttons */
